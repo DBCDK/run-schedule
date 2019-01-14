@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright Dansk Bibliotekscenter a/s. Licensed under GNU GPLv3
+  ~ See license text in LICENSE.txt
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>run-schedule</artifactId>
+  <version>1.0.0</version>
+  <groupId>dk.dbc</groupId>
+  <name>stopwatch</name>
+
+  <ciManagement>
+    <url>https://is.dbc.dk/job/misc/job/run-on-schedule</url>
+  </ciManagement>
+
+  <distributionManagement>
+    <repository>
+      <id>mavenrepo.dbc.dk</id>
+      <name>mavenrepo</name>
+      <url>http://mavenrepo.dbc.dk/content/repositories/snapshots</url>
+    </repository>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>mavenrepo.dbc.dk</id>
+      <url>http://mavenrepo.dbc.dk/content/groups/public/</url>
+    </repository>
+  </repositories>
+
+  <properties>
+    <jdk.target.version>1.8</jdk.target.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.cronutils</groupId>
+      <artifactId>cron-utils</artifactId>
+      <version>8.0.0</version>
+    </dependency>
+    <dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.3.2</version>
+			<scope>test</scope>
+		</dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-core</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <source>${jdk.target.version}</source>
+          <target>${jdk.target.version}</target>
+          <testSource>${jdk.target.version}</testSource>
+          <testTarget>${jdk.target.version}</testTarget>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>true</showWarnings>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.19</version>
+        <configuration>
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-surefire-provider</artifactId>
+            <version>1.0.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.3.2</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+</project>
