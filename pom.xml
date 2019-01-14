@@ -23,7 +23,7 @@
     <repository>
       <id>mavenrepo.dbc.dk</id>
       <name>mavenrepo</name>
-      <url>http://mavenrepo.dbc.dk/content/repositories/snapshots</url>
+      <url>http://mavenrepo.dbc.dk/content/repositories/releases/</url>
     </repository>
   </distributionManagement>
 
