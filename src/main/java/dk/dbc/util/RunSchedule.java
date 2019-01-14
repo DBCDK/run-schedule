@@ -122,7 +122,7 @@ public class RunSchedule {
      * Indicates whether the given instant satisfies this run schedule
      * and is later than the optional instant of the last run by more
      * than sixty seconds
-     * @param date the instant to evaluate
+     * @param instant the instant to evaluate
      * @param lastRun the instant of the last run, can be null
      * @return a boolean indicating whether the given instant satisfies the
      * run schedule

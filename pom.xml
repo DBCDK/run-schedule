@@ -13,7 +13,7 @@
   <artifactId>run-schedule</artifactId>
   <version>1.0.0</version>
   <groupId>dk.dbc</groupId>
-  <name>stopwatch</name>
+  <name>run-schedule</name>
 
   <ciManagement>
     <url>https://is.dbc.dk/job/misc/job/run-on-schedule</url>
