@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Locale;
@@ -128,6 +129,16 @@ class RunScheduleTest {
                         instant.plus(45, ChronoUnit.MINUTES)
                                 .plus(30, ChronoUnit.SECONDS)),
                 is(false));
+    }
+
+    @Test
+    void isSatisfiedBy_InstantAndNextExactMatch() {
+        final RunSchedule runSchedule = new RunSchedule("19 07 * * *")
+               .withTimezone(ZoneId.of("Europe/Copenhagen"));
+        final Instant instant = ZonedDateTime.parse("2019-01-24T07:19:00.00+01:00").toInstant();
+        assertThat(runSchedule.isSatisfiedBy(
+                instant, instant.minus(1, ChronoUnit.DAYS)),
+                is(true));
     }
 
     @Test

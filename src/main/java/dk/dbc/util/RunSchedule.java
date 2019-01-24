@@ -168,7 +168,7 @@ public class RunSchedule {
             final Comparator<ZonedDateTime> nextExecutionComparator =
                     Comparator.comparing(
                             time -> time.truncatedTo(ChronoUnit.MINUTES));
-            return nextExecutionComparator.compare(nextExecution.get(), zonedInstant) < 0;
+            return nextExecutionComparator.compare(nextExecution.get(), zonedInstant) <= 0;
         }
         return true;
     }
