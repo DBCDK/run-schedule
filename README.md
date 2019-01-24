@@ -4,8 +4,6 @@ run-schedule
 A Java library providing a parser and evaluator for unix-like cron 
 expressions.
 
-The project follows the [Semantic Versioning Convention](http://semver.org/).
-
 Cron expressions are comprised of 5 required fields separated by white space. 
 The fields respectively are described as follows:
 
@@ -38,6 +36,18 @@ The legal characters and the names of months and days of the week are
 not case sensitive.
 
 ### usage
+
+Add the dependency to your Maven pom.xml
+
+```xml
+<dependency>
+  <groupId>dk.dbc</groupId>
+  <artifactId>run-schedule</artifactId>
+  <version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
+In your Java code
 
 ```java
 import dk.dbc.util.RunSchedule;
