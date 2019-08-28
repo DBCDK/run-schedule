@@ -13,6 +13,7 @@ import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.model.time.ExecutionTime;
 import com.cronutils.parser.CronParser;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -134,6 +135,46 @@ public class RunSchedule {
                 return isSatisfiedByLastRun(instant, lastRun);
             }
             return true;
+        }
+        return false;
+    }
+
+    /**
+     * Indicates whether the given date is overdue when comparing
+     * the given last run time with the expected last run time
+     * according to this schedule.
+     * @param date the date to evaluate
+     * @param lastRun the date of the last run
+     * @return a boolean indicating whether the given date is overdue
+     */
+    public boolean isOverdue(final Date date, final Date lastRun) {
+        return isOverdue(
+                date != null ? date.toInstant() : null,
+                lastRun != null ? lastRun.toInstant() : null);
+    }
+
+    /**
+     * Indicates whether the given instant is overdue when comparing
+     * the given last run time with the expected last run time
+     * according to this schedule.
+     * @param instant the instant to evaluate
+     * @param lastRun the instant of the last run
+     * @return a boolean indicating whether the given instant is overdue
+     */
+    public boolean isOverdue(final Instant instant, final Instant lastRun) {
+        if (instant != null && lastRun != null) {
+            // Cron schedule was not satisfied, but check
+            // if we are overdue by comparing the given
+            // actual last run time with the expected last
+            // run time.
+            final Optional<Duration> durationFromLastExecution =
+                    executionTime.timeFromLastExecution(instant.atZone(timezone));
+            if (durationFromLastExecution.isPresent()) {
+                final ZonedDateTime expectedLastRun = instant.atZone(timezone)
+                        .minus(durationFromLastExecution.get());
+                final ZonedDateTime actualLastRun = lastRun.atZone(timezone);
+                return actualLastRun.isBefore(expectedLastRun);
+            }
         }
         return false;
     }

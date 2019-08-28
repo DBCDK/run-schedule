@@ -54,10 +54,17 @@ import dk.dbc.util.RunSchedule;
 
 final RunSchedule runSchedule = new RunSchedule("45 * * * *");
 if (runSchedule.isSatisfiedBy(Instant.now())) {
-    // do something
+    // do something if instant satisfies the run schedule
 }
 if (runSchedule.isSatisfiedBy(Instant.now(), lastRun)) {
-    // do something
+    // do something if instant satisfies the run schedule
+    // and the lastRun time is not within the last 60 seconds
+}
+if (runSchedule.isSatisfiedBy(instant) 
+    || runSchedule.isOverdue(instant, lastRun)) {
+    // do something if instant satisfies the run schedule
+    // or is overdue when comparing the given last run time 
+    // with the expected last run time according to the schedule
 }
 ```
 
