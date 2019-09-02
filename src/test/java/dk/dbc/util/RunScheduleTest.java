@@ -142,6 +142,96 @@ class RunScheduleTest {
     }
 
     @Test
+    void isOverdue_Date() {
+        final RunSchedule runSchedule = new RunSchedule("45 * * JAN *");
+        final Instant instant = Instant.parse("2019-01-14T07:00:00.00Z");
+        assertThat("null date, null last-run",
+                runSchedule.isOverdue((Date)null, (Date)null),
+                is(false));
+        assertThat("null date, non-null last-run",
+                runSchedule.isOverdue(null, Date.from(instant)),
+                is(false));
+        assertThat("non-null date, null last-run",
+                runSchedule.isOverdue(Date.from(instant), null),
+                is(false));
+        assertThat("non-matching date, last-run on schedule",
+                runSchedule.isOverdue(
+                        Date.from(instant),
+                        Date.from(instant.minus(15, ChronoUnit.MINUTES))),
+                is(false));
+        assertThat("matching date, last-run on schedule",
+                runSchedule.isOverdue(
+                        Date.from(instant.plus(45, ChronoUnit.MINUTES)),
+                        Date.from(instant.minus(15, ChronoUnit.MINUTES))),
+                is(false));
+        assertThat("matching date, last-run before last schedule",
+                runSchedule.isOverdue(
+                        Date.from(instant.plus(45, ChronoUnit.MINUTES)),
+                        Date.from(instant.plus(45, ChronoUnit.MINUTES)
+                                .minus(1, ChronoUnit.DAYS))),
+                is(true));
+        assertThat("matching date, last-run after last schedule",
+                runSchedule.isOverdue(
+                        Date.from(instant.plus(45, ChronoUnit.MINUTES)),
+                        Date.from(instant)),
+                is(false));
+        assertThat("non-matching date, last-run on schedule",
+                runSchedule.isOverdue(
+                        Date.from(instant),
+                        Date.from(instant.minus(15, ChronoUnit.MINUTES))),
+                is(false));
+        assertThat("non-matching date, last-run after last schedule",
+                runSchedule.isOverdue(Date.from(instant), Date.from(instant)),
+                is(false));
+        assertThat("non-matching date, last-run before last schedule",
+                runSchedule.isOverdue(
+                        Date.from(instant),
+                        Date.from(instant.minus(2, ChronoUnit.HOURS))),
+                is(true));
+    }
+
+    @Test
+    void isOverdue_Instant() {
+        final RunSchedule runSchedule = new RunSchedule("45 * * JAN *");
+        final Instant instant = Instant.parse("2019-01-14T07:00:00.00Z");
+        assertThat("null instant, null last-run",
+                runSchedule.isOverdue((Instant)null, (Instant)null),
+                is(false));
+        assertThat("null instant, non-null last-run",
+                runSchedule.isOverdue(null, instant),
+                is(false));
+        assertThat("non-null instant, null last-run",
+                runSchedule.isOverdue(instant, null),
+                is(false));
+        assertThat("non-matching instant, last-run on schedule",
+                runSchedule.isOverdue(instant, instant.minus(15, ChronoUnit.MINUTES)),
+                is(false));
+        assertThat("matching instant, last-run on schedule",
+                runSchedule.isOverdue(
+                        instant.plus(45, ChronoUnit.MINUTES),
+                        instant.minus(15, ChronoUnit.MINUTES)),
+                is(false));
+        assertThat("matching instant, last-run before last schedule",
+                runSchedule.isOverdue(
+                        instant.plus(45, ChronoUnit.MINUTES),
+                        instant.plus(45, ChronoUnit.MINUTES)
+                                .minus(1, ChronoUnit.DAYS)),
+                is(true));
+        assertThat("matching instant, last-run after last schedule",
+                runSchedule.isOverdue(instant.plus(45, ChronoUnit.MINUTES), instant),
+                is(false));
+        assertThat("non-matching instant, last-run on schedule",
+                runSchedule.isOverdue(instant, instant.minus(15, ChronoUnit.MINUTES)),
+                is(false));
+        assertThat("non-matching instant, last-run after last schedule",
+                runSchedule.isOverdue(instant, instant),
+                is(false));
+        assertThat("non-matching instant, last-run before last schedule",
+                runSchedule.isOverdue(instant, instant.minus(2, ChronoUnit.HOURS)),
+                is(true));
+    }
+
+    @Test
     void changeTimezone() {
         final RunSchedule runSchedule = new RunSchedule("* 7 * * *")
                 .withTimezone(ZoneId.of("UTC+1"));
