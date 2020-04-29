@@ -42,7 +42,7 @@ Add the dependency to your Maven pom.xml
 ```xml
 <dependency>
   <groupId>dk.dbc</groupId>
-  <artifactId>run-schedule</artifactId>
+  <artifactId>dbc-commons-run-schedule</artifactId>
   <version>1.1-SNAPSHOT</version>
 </dependency>
 ```
