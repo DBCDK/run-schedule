@@ -35,7 +35,7 @@ hour field means "the hours 0, 6, 12, and 18".
 The legal characters and the names of months and days of the week are
 not case sensitive.
 
-### usage
+### Maven
 
 Add the dependency to your Maven pom.xml
 
@@ -43,9 +43,11 @@ Add the dependency to your Maven pom.xml
 <dependency>
   <groupId>dk.dbc</groupId>
   <artifactId>run-schedule</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1-SNAPSHOT</version>
 </dependency>
 ```
+
+### usage
 
 In your Java code
 

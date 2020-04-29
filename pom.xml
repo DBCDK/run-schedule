@@ -10,33 +10,21 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>run-schedule</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <artifactId>dbc-commons-run-schedule</artifactId>
+  <version>1.1-SNAPSHOT</version>
   <groupId>dk.dbc</groupId>
-  <name>run-schedule</name>
+  <name>dbc-commons-run-schedule</name>
+
+  <parent>
+    <groupId>dk.dbc</groupId>
+    <artifactId>super-pom</artifactId>
+    <version>master-SNAPSHOT</version>
+    <relativePath></relativePath>
+  </parent>
 
   <ciManagement>
     <url>https://is.dbc.dk/job/misc/job/run-on-schedule</url>
   </ciManagement>
-
-  <distributionManagement>
-    <repository>
-      <id>mavenrepo.dbc.dk</id>
-      <name>mavenrepo</name>
-      <url>http://mavenrepo.dbc.dk/content/repositories/snapshots/</url>
-    </repository>
-  </distributionManagement>
-
-  <repositories>
-    <repository>
-      <id>mavenrepo.dbc.dk</id>
-      <url>http://mavenrepo.dbc.dk/content/groups/public/</url>
-    </repository>
-  </repositories>
-
-  <properties>
-    <jdk.target.version>1.8</jdk.target.version>
-  </properties>
 
   <dependencies>
     <dependency>
@@ -60,19 +48,6 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
-        <configuration>
-          <source>${jdk.target.version}</source>
-          <target>${jdk.target.version}</target>
-          <testSource>${jdk.target.version}</testSource>
-          <testTarget>${jdk.target.version}</testTarget>
-          <showDeprecation>true</showDeprecation>
-          <showWarnings>true</showWarnings>
-        </configuration>
-      </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.19</version>
