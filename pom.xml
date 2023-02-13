@@ -15,10 +15,17 @@
   <groupId>dk.dbc</groupId>
   <name>dbc-commons-run-schedule</name>
 
+  <repositories>
+    <repository>
+      <id>mavenrepo.dbc.dk</id>
+      <url>https://mavenrepo.dbc.dk/nexus/content/groups/public</url>
+    </repository>
+  </repositories>
+
   <parent>
     <groupId>dk.dbc</groupId>
     <artifactId>super-pom</artifactId>
-    <version>master-SNAPSHOT</version>
+    <version>java8-old-payara5</version>
     <relativePath></relativePath>
   </parent>
 
