@@ -17,7 +17,6 @@ pipeline {
 				checkout scm
 			}
 		}
-        stages {
         stage("build") {
             steps {
                 withSonarQubeEnv(installationName: 'sonarqube.dbc.dk') {
