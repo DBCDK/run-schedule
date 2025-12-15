@@ -1,12 +1,9 @@
 #!groovy
 
-def workerNode = "devel10"
+def workerNode = "devel12"
 
 pipeline {
 	agent {label workerNode}
-	triggers {
-		pollSCM("H/03 * * * *")
-	}
 	options {
 		timestamps()
 	}
