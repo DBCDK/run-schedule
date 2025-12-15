@@ -43,9 +43,11 @@ Add the dependency to your Maven pom.xml
 <dependency>
   <groupId>dk.dbc</groupId>
   <artifactId>dbc-commons-run-schedule</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>2.0-SNAPSHOT</version>
 </dependency>
 ```
+
+From version 2.0-SNAPSHOT and onwards java 21 is required.
 
 ### usage
 
@@ -74,7 +76,7 @@ if (runSchedule.isSatisfiedBy(instant)
 
 **Requirements**
 
-To build this project JDK 1.8 or higher and Apache Maven is required.
+To build this project JDK 21 or higher and Apache Maven is required.
 
 ### License
 
