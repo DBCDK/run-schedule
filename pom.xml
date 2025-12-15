@@ -29,9 +29,9 @@
     <relativePath></relativePath>
   </parent>
 
-  <ciManagement>
-    <url>https://is.dbc.dk/job/misc/job/run-on-schedule</url>
-  </ciManagement>
+  <properties>
+    <sonar.projectKey>${project.artifactId}</sonar.projectKey>
+  </properties>
 
   <dependencies>
     <dependency>
