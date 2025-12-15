@@ -11,7 +11,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>dbc-commons-run-schedule</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>2.0-SNAPSHOT</version>
   <groupId>dk.dbc</groupId>
   <name>dbc-commons-run-schedule</name>
 
@@ -25,13 +25,13 @@
   <parent>
     <groupId>dk.dbc</groupId>
     <artifactId>super-pom</artifactId>
-    <version>java8-old-payara5</version>
+    <version>java21-SNAPSHOT</version>
     <relativePath></relativePath>
   </parent>
 
-  <ciManagement>
-    <url>https://is.dbc.dk/job/misc/job/run-on-schedule</url>
-  </ciManagement>
+  <properties>
+    <sonar.projectKey>${project.artifactId}</sonar.projectKey>
+  </properties>
 
   <dependencies>
     <dependency>

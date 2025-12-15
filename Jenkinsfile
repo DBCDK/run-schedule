@@ -1,12 +1,9 @@
 #!groovy
 
-def workerNode = "devel10"
+def workerNode = "devel12"
 
 pipeline {
 	agent {label workerNode}
-	triggers {
-		pollSCM("H/03 * * * *")
-	}
 	options {
 		timestamps()
 	}
@@ -20,32 +17,42 @@ pipeline {
 				checkout scm
 			}
 		}
-		stage("verify") {
-			steps {
-				sh "mvn verify pmd:pmd javadoc:aggregate"
-				junit "target/surefire-reports/TEST-*.xml"
-			}
-		}
-		stage("warnings") {
-			agent {label workerNode}
-			steps {
-				warnings consoleParsers: [
-					[parserName: "Java Compiler (javac)"],
-					[parserName: "JavaDoc Tool"]
-				],
-					unstableTotalAll: "0",
-					failedTotalAll: "0"
-			}
-		}
-		stage("pmd") {
-			agent {label workerNode}
-			steps {
-				step([$class: 'hudson.plugins.pmd.PmdPublisher',
-					  pattern: 'target/pmd.xml',
-					  unstableTotalAll: "0",
-					  failedTotalAll: "0"])
-			}
-		}
+        stage("build") {
+            steps {
+                withSonarQubeEnv(installationName: 'sonarqube.dbc.dk') {
+                    script {
+                        def status = sh returnStatus: true, script:  """
+                            rm -rf \$WORKSPACE/.repo/dk/dbc
+                            mvn -B -Dmaven.repo.local=\$WORKSPACE/.repo --no-transfer-progress clean
+                            mvn -B -Dmaven.repo.local=\$WORKSPACE/.repo --no-transfer-progress verify
+                        """
+                        
+                        def sonarOptions = "-Dsonar.branch.name=$BRANCH_NAME"
+                        if (env.BRANCH_NAME != 'master') {
+                            sonarOptions += " -Dsonar.newCode.referenceBranch=master"
+                        }
+
+                        status += sh returnStatus: true, script: """
+                            mvn -B -Dmaven.repo.local=$WORKSPACE/.repo --no-transfer-progress $sonarOptions sonar:sonar
+                        """
+
+                        junit testResults: '**/target/surefire-reports/TEST-*.xml'
+
+                        if (status != 0) {
+                            error("build failed")
+                        }
+                    }
+                }
+            }
+        }
+        stage("quality gate") {
+            steps {
+                // wait for analysis results
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
 		stage("deploy") {
 			when {
 				branch "master"
