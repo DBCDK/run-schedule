@@ -1,5 +1,7 @@
 #!groovy
 
+@Library('dependency-track')
+
 def workerNode = "devel12"
 
 pipeline {
@@ -50,6 +52,17 @@ pipeline {
                 // wait for analysis results
                 timeout(time: 1, unit: 'HOURS') {
                     waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+        stage("supply-chain gate") {
+            steps {
+                script {
+                    dependencyTrackGate(
+                        projectBom:  'target/sbom-java.json',
+                        projectTeam: 'de-team',
+                        projectType: 'java'
+                    )
                 }
             }
         }

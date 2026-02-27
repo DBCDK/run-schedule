@@ -43,11 +43,11 @@ Add the dependency to your Maven pom.xml
 <dependency>
   <groupId>dk.dbc</groupId>
   <artifactId>dbc-commons-run-schedule</artifactId>
-  <version>2.0-SNAPSHOT</version>
+  <version>21.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
-From version 2.0-SNAPSHOT and onwards java 21 is required.
+From version 21.2.0-SNAPSHOT and onwards java 21 is required.
 
 ### usage
 
